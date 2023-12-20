@@ -1,0 +1,88 @@
+parameters:
+  - name: environmentName
+    type: string
+
+stages:
+- stage: Create Cloud Accounts
+  jobs:
+  - job: 
+    steps:
+    - script: echo "This is Stage1 - Job1_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: 
+    steps:
+    - script: echo "This is Stage1 - Job1_2"
+      displayName: 'Print Stage and Job Name'
+
+- stage: Fetch Data
+  jobs:
+  - job: Job2_1
+    steps:
+    - script: echo "This is Stage2 - Job2_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: Job2_2
+    steps:
+    - script: echo "This is Stage2 - Job2_2"
+      displayName: 'Print Stage and Job Name'
+
+- stage: Virtual Network Setup and Peering
+  jobs:
+  - job: Job3_1
+    steps:
+    - script: echo "This is Stage3 - Job3_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: Job3_2
+    steps:
+    - script: echo "This is Stage3 - Job3_2"
+      displayName: 'Print Stage and Job Name'
+
+- stage: Check Peering Status
+  jobs:
+  - job: Job4_1
+    steps:
+    - script: echo "This is Stage4 - Job4_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: Job4_2
+    steps:
+    - script: echo "This is Stage4 - Job4_2"
+      displayName: 'Print Stage and Job Name'
+
+- stage: 
+  jobs:
+  - job: Job5_1
+    steps:
+    - script: echo "This is Stage5 - Job5_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: Job5_2
+    steps:
+    - script: echo "This is Stage5 - Job5_2"
+      displayName: 'Print Stage and Job Name'
+
+- stage: Azure AD Access Provisioning
+  jobs:
+  - job: Job6_1
+    steps:
+    - script: echo "This is Stage6 - Job6_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: Job6_2
+    steps:
+    - script: echo "This is Stage6 - Job6_2"
+      displayName: 'Print Stage and Job Name'
+
+- stage: GP-VPN Access Provisionnning
+  jobs:
+  - job: Job7_1
+    steps:
+    - script: echo "This is Stage7 - Job7_1"
+      displayName: 'Print Stage and Job Name'
+
+  - job: Job7_2
+    steps:
+    - script: echo "This is Stage7 - Job7_2"
+      displayName: 'Print Stage and Job Name'
