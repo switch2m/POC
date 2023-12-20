@@ -1,0 +1,41 @@
+# add ids under the each env
+AWSEnvironments:
+  - id: 1
+    Region: "us-east-1"
+    Chargecode: "LPE16029-01-01-01-GCAM"
+    Networking:
+      VPCName: "USE1-GRNLT-NPD-VPC-01"
+      NumberOfSubnets: 2
+      Azs:
+        - "us-east-1a"
+        - "us-east-1b"
+    AccessProvisioning:
+      users:
+        - "a-xxx@xxx.com"
+        - "a-xxxx@xxxx.com"
+      permissions:
+        - "AWSPowerUser"
+        - "AWSReadOnly"
+
+AzureEnvironments:
+  - id: 1
+    EnvironmentIdentifier: "PRD"
+    DCCRegionalHub: "AME"
+    Region: "eastus2"
+    Chargecode: "LPE16029-01-01-01-GCAM"
+    ManagementGroupId: "AZ_APA_MG"
+    SubscriptionName: #Identifier that will help us Locate Subs
+
+    Networking:
+      RessourceGroupName: "AZRG-AME-USE2-CCMS-NET_TEST-POC-02"
+      VNETName: "AZUSE2-CCMS-POC-VNET-02"
+      NumberOfSubnets: 2
+      UpdateCidrBlock: false
+    
+    AccessProvisioning:
+      users:
+        - "a-xxx@xxxx.com"
+        - "a-xxxxx@x.comxx"
+      permissions:
+        - "Contributer"
+        - "Contributer"
