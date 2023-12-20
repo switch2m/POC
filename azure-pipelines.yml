@@ -1,0 +1,34 @@
+trigger:
+- main
+
+jobs:
+- job: DetermineEnvironments
+  steps:
+  - checkout: self
+  - script: |
+      echo "Extracting Environment info..."
+      awsEnvironments=$(yq e '.AWSEnvironments' path/to/your/config.yaml)
+      azureEnvironments=$(yq e '.AzureEnvironments' path/to/your/config.yaml)
+
+      if [ -n "$awsEnvironments" ]; then
+        echo "##vso[task.setvariable variable=awsEnvironments;isOutput=true]$awsEnvironments"
+      fi
+
+      if [ -n "$azureEnvironments" ]; then
+        echo "##vso[task.setvariable variable=azureEnvironments;isOutput=true]$azureEnvironments"
+      fi
+    displayName: 'Extract Environment Info'
+    # Make sure to install yq or use an image that includes it
+
+stages:
+- ${{ if ne(variables['awsEnvironments'], '') }}:
+  - template: azure-stages-template.yml  # The file with your AWS stages
+    parameters:
+      environmentType: 'AWS'
+      environmentConfig: $(DetermineEnvironments.awsEnvironments)
+
+- ${{ if ne(variables['azureEnvironments'], '') }}:
+  - template: aws-stages-template.yml  # The file with your Azure stages
+    parameters:
+      environmentType: 'Azure'
+      environmentConfig: $(DetermineEnvironments.azureEnvironments)
