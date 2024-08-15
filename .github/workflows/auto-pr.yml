@@ -18,11 +18,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check if a PR already exists
-          EXISTING_PR=$(gh pr list --base main --head pizza-order-ui --json number --jq '.[0].number')
+          EXISTING_PR=$(gh pr list --base main --head pizza --json number --jq '.[0].number')
 
           if [ -z "$EXISTING_PR" ]; then
             # Create the pull request if it doesn't exist
-            PR_URL=$(gh pr create --base main --head pizza-order-ui --title "Merge pizza-order-ui into main" --body "This PR was automatically created to merge changes from the pizza-order-ui branch into main. Please review the changes and merge if appropriate.")
+            PR_URL=$(gh pr create --base main --head pizza --title "Merge pizza into main" --body "This PR was automatically created to merge changes from the pizza branch into main. Please review the changes and merge if appropriate.")
             echo "Pull request created: $PR_URL"
           else
             echo "Pull request already exists with number: $EXISTING_PR"
