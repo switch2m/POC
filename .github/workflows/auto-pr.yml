@@ -27,7 +27,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: pizza-to-main-pr
+          branch: "pizza-to-main-pr"
           base: main
           title: 'Merge pizza into main'
           body: |
