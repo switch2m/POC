@@ -27,8 +27,8 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          base: pizza
+          branch: pizza-to-main-pr
+          base: main
           title: 'Merge pizza into main'
           body: |
             This PR was automatically created to merge changes from the pizza-order-ui branch into main.
