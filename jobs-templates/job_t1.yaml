@@ -1,0 +1,10 @@
+jobs:
+- job: SAST_Scan_1
+  displayName: "Static Application Security Testing (SAST) Scan using Bearer CLI"
+  steps:   
+   - script: |
+        echo "Installing necessary tools."
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https
+        sudo apt-get update
+     displayName: 'Install Bearer CLI'
