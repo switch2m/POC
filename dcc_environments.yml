@@ -19,6 +19,8 @@ stages:
           AppId: "Azadpdazdzdp42627"
           CustomerName: "Test_AWS"
           MemberFirm: "US"
+          Networking:
+            - region: "us-west"
           AccessProvisioning:
             - users:
                 - "a-dell@deell.com"
