@@ -5,7 +5,7 @@ parameters:
 stages:
   - ${{ each environment in parameters.clientEnvironments.Platforms }}:
       - stage: Create_${{ environment.Platform }}_Account_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
-        displayName: "Create ${{ environment.Platform }} ${{ environment.EnvironmentIdentifier }} account for ${{parameters.clientEnvironments.ProjectName}} - ${{ environment.AccountSequenceNumber}} "
+        displayName: "Create ${{ environment.Platform }} account for ${{parameters.clientEnvironments.ProjectName}} - ${{ environment.AccountSequenceNumber}} "
         jobs:
           - template: jobs-templates/job_t1.yaml # Template reference
             parameters:
@@ -21,23 +21,23 @@ stages:
               projectName: ${{parameters.clientEnvironments.ProjectName}}
       - ${{ if environment.Networking && length(environment.Networking) > 0 }}:
         - stage: Fetch_Hub_and_Spoke_data_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
-          displayName: "Fetch HUB data and check for available CIDR block on ${{ environment.Platform }} - ${{ environment.EnvironmentIdentifier }} - ${{ environment.AccountSequenceNumber}}"
+          displayName: "Fetch HUB data and check for available CIDR block on ${{ environment.Platform }}  - ${{ environment.AccountSequenceNumber}}"
           jobs:
             - template: jobs-templates/job_t1.yaml
               parameters:
                 environment: ${{ environment}}
                 projectName: ${{parameters.clientEnvironments.ProjectName}}
 
-        - stage: Run_Terrafrom_Config_${{ environment.Platform }}_${{ environment.EnvironmentIdentifier }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
-          displayName: "Run Terraform configuration for ${{parameters.clientEnvironments.ProjectName}} on ${{ environment.Platform }} - ${{ environment.EnvironmentIdentifier }} - ${{ environment.AccountSequenceNumber}}"
+        - stage: Run_Terrafrom_Config_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+          displayName: "Run Terraform configuration for ${{parameters.clientEnvironments.ProjectName}} on ${{ environment.Platform }} -  ${{ environment.AccountSequenceNumber}}"
           jobs:
             - template: jobs-templates/job_t1.yaml
               parameters:
                 environment: ${{ environment}}
                 projectName: ${{parameters.clientEnvironments.ProjectName}}
 
-      - stage: Access_Provisionning_${{ environment.Platform }}_${{ environment.EnvironmentIdentifier }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
-        displayName: "Access provisionning for ${{parameters.clientEnvironments.ProjectName}} on ${{ environment.Platform }} - ${{ environment.EnvironmentIdentifier }} - ${{ environment.AccountSequenceNumber}}"
+      - stage: Access_Provisionning_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+        displayName: "Access provisionning for ${{parameters.clientEnvironments.ProjectName}} on ${{ environment.Platform }} - ${{ environment.AccountSequenceNumber}}"
         jobs:
           - template: jobs-templates/job_t1.yaml # Template reference
             parameters:
