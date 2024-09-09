@@ -7,4 +7,4 @@ parameters:
   
 stages:
 - ${{ if ne(parameters.clientId, '') }}:
-  - template: "global-pipeline-inputs/${{parameters.clientId}}_environments.yml"
+  - template: "${{parameters.clientId}}_environments.yml"
