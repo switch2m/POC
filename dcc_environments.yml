@@ -1,5 +1,5 @@
 stages:
-- template: "../stages_template.yml"
+- template: "stages_template.yml"
   parameters:
     clientEnvironments:
       ProjectName: "TEST" # 'GRNLT' 'ASCEND'
