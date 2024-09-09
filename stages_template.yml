@@ -6,6 +6,7 @@ stages:
   - ${{ each environment in parameters.clientEnvironments.Platforms }}:
       - stage: Create_${{ environment.Platform }}_Account_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
         displayName: "Create ${{ environment.Platform }} account for ${{parameters.clientEnvironments.ProjectName}} - ${{ environment.AccountSequenceNumber}} "
+        condition: and(containsValue(environment, 'Networking'), greater(length(environment.Networking), 3))
         jobs:
           - template: jobs-templates/job_t1.yaml # Template reference
             parameters:
