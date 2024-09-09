@@ -6,7 +6,6 @@ stages:
   - ${{ each environment in parameters.clientEnvironments.Platforms }}:
       - stage: Create_${{ environment.Platform }}_Account_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
         displayName: "Create ${{ environment.Platform }} account for ${{parameters.clientEnvironments.ProjectName}} - ${{ environment.AccountSequenceNumber}} "
-        condition: and(containsValue(environment, 'Networking'), greater(length(environment.Networking), 3))
         jobs:
           - template: jobs-templates/job_t1.yaml # Template reference
             parameters:
@@ -20,7 +19,7 @@ stages:
             parameters:
               environment: ${{environment}} 
               projectName: ${{parameters.clientEnvironments.ProjectName}}
-      - ${{ if containsValue(environment, 'Networking') }}:
+      - ${{ if ne(environment.Networking, '') }}:
         - stage: Fetch_Hub_and_Spoke_data_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
           displayName: "Fetch HUB data and check for available CIDR block on ${{ environment.Platform }}  - ${{ environment.AccountSequenceNumber}}"
           jobs:
