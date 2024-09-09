@@ -19,22 +19,7 @@ stages:
           AppId: "Azadpdazdzdp42627"
           CustomerName: "Test_AWS"
           MemberFirm: "US"
-          Networking:
-            - region: "ap-south-1"
-              netAddressMask: 27
-              subAddressMasks: "[27]"
-              description: "VPC with mask 27"
-              updateCidrBlock: false
-              addSecondaryCidrBlock: true
-              secSubAddressMasks: "[27]"
-              
-            - region: "ap-south-1"
-              netAddressMask: 27
-              subAddressMasks: "[27]"
-              description: "VPC with mask 27"
-              updateCidrBlock: false
-              addSecondaryCidrBlock: true
-              secSubAddressMasks: "[28,28]"
+          Networking: 
           AccessProvisioning:
             - users:
                 - "a-dell@deell.com"
