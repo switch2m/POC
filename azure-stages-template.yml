@@ -1,88 +1,45 @@
 parameters:
-  - name: environmentName
-    type: string
+  - name: clientEnvironments
+    type: object
 
 stages:
-- stage: Create Cloud Accounts
-  jobs:
-  - job: 
-    steps:
-    - script: echo "This is Stage1 - Job1_1"
-      displayName: 'Print Stage and Job Name'
+  - ${{ each environment in parameters.clientEnvironments.Platforms }}:
+      - stage: Create_${{ environment.Platform }}_Account_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+        displayName: "Create ${{ environment.Platform }} ${{ environment.EnvironmentIdentifier }} account for ${{parameters.clientEnvironments.ProjectName}} - ${{ environment.AccountSequenceNumber}} "
+        jobs:
+          - template: jobs-templates/account_creation_jobs_template.yml # Template reference
+            parameters:
+              environment: ${{environment}}
+              projectName: ${{parameters.clientEnvironments.ProjectName}}
+          # ... more Azure-specific jobs ...
+      - stage: Move_Account_to_Right_OU_or_MG_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+        displayName: "Move the account to the right OU or Management group ${{parameters.clientEnvironments.ProjectName}} "
+        jobs:
+          - template: jobs-templates/Mg_OU_jobs_template.yaml # Template reference
+            parameters:
+              environment: ${{environment}} 
+              projectName: ${{parameters.clientEnvironments.ProjectName}}
+      - ${{ if environment.Networking && length(environment.Networking) > 0 }}:
+        - stage: Fetch_Hub_and_Spoke_data_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+          displayName: "Fetch HUB data and check for available CIDR block on ${{ environment.Platform }} - ${{ environment.EnvironmentIdentifier }} - ${{ environment.AccountSequenceNumber}}"
+          jobs:
+            - template: jobs-templates/data_fetching_jobs_template.yml
+              parameters:
+                environment: ${{ environment}}
+                projectName: ${{parameters.clientEnvironments.ProjectName}}
 
-  - job: 
-    steps:
-    - script: echo "This is Stage1 - Job1_2"
-      displayName: 'Print Stage and Job Name'
+        - stage: Run_Terrafrom_Config_${{ environment.Platform }}_${{ environment.EnvironmentIdentifier }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+          displayName: "Run Terraform configuration for ${{parameters.clientEnvironments.ProjectName}} on ${{ environment.Platform }} - ${{ environment.EnvironmentIdentifier }} - ${{ environment.AccountSequenceNumber}}"
+          jobs:
+            - template: jobs-templates/terraform_jobs_template.yml
+              parameters:
+                environment: ${{ environment}}
+                projectName: ${{parameters.clientEnvironments.ProjectName}}
 
-- stage: Fetch Data
-  jobs:
-  - job: Job2_1
-    steps:
-    - script: echo "This is Stage2 - Job2_1"
-      displayName: 'Print Stage and Job Name'
-
-  - job: Job2_2
-    steps:
-    - script: echo "This is Stage2 - Job2_2"
-      displayName: 'Print Stage and Job Name'
-
-- stage: Virtual Network Setup and Peering
-  jobs:
-  - job: Job3_1
-    steps:
-    - script: echo "This is Stage3 - Job3_1"
-      displayName: 'Print Stage and Job Name'
-
-  - job: Job3_2
-    steps:
-    - script: echo "This is Stage3 - Job3_2"
-      displayName: 'Print Stage and Job Name'
-
-- stage: Check Peering Status
-  jobs:
-  - job: Job4_1
-    steps:
-    - script: echo "This is Stage4 - Job4_1"
-      displayName: 'Print Stage and Job Name'
-
-  - job: Job4_2
-    steps:
-    - script: echo "This is Stage4 - Job4_2"
-      displayName: 'Print Stage and Job Name'
-
-- stage: 
-  jobs:
-  - job: Job5_1
-    steps:
-    - script: echo "This is Stage5 - Job5_1"
-      displayName: 'Print Stage and Job Name'
-
-  - job: Job5_2
-    steps:
-    - script: echo "This is Stage5 - Job5_2"
-      displayName: 'Print Stage and Job Name'
-
-- stage: Azure AD Access Provisioning
-  jobs:
-  - job: Job6_1
-    steps:
-    - script: echo "This is Stage6 - Job6_1"
-      displayName: 'Print Stage and Job Name'
-
-  - job: Job6_2
-    steps:
-    - script: echo "This is Stage6 - Job6_2"
-      displayName: 'Print Stage and Job Name'
-
-- stage: GP-VPN Access Provisionnning
-  jobs:
-  - job: Job7_1
-    steps:
-    - script: echo "This is Stage7 - Job7_1"
-      displayName: 'Print Stage and Job Name'
-
-  - job: Job7_2
-    steps:
-    - script: echo "This is Stage7 - Job7_2"
-      displayName: 'Print Stage and Job Name'
+      - stage: Access_Provisionning_${{ environment.Platform }}_${{ environment.EnvironmentIdentifier }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
+        displayName: "Access provisionning for ${{parameters.clientEnvironments.ProjectName}} on ${{ environment.Platform }} - ${{ environment.EnvironmentIdentifier }} - ${{ environment.AccountSequenceNumber}}"
+        jobs:
+          - template: jobs-templates/access_provisionning_jobs_template.yml # Template reference
+            parameters:
+              environment: ${{environment}} 
+              projectName: ${{parameters.clientEnvironments.ProjectName}}
