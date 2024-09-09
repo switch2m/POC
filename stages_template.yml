@@ -19,7 +19,7 @@ stages:
             parameters:
               environment: ${{environment}} 
               projectName: ${{parameters.clientEnvironments.ProjectName}}
-      - ${{ if environment.Networking && length(environment.Networking) > 0 }}:
+      - ${{ if not(empty(environment.Networking)) }}:
         - stage: Fetch_Hub_and_Spoke_data_${{ environment.Platform }}_${{parameters.clientEnvironments.ProjectName}}_${{ environment.AccountSequenceNumber}}
           displayName: "Fetch HUB data and check for available CIDR block on ${{ environment.Platform }}  - ${{ environment.AccountSequenceNumber}}"
           jobs:
