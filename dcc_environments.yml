@@ -2,16 +2,21 @@ stages:
 - template: "../stages_template.yml"
   parameters:
     clientEnvironments:
-      ProjectName: "TEST
+      ProjectName: "TEST" # 'GRNLT' 'ASCEND'
       Platforms:
         - Platform: "AWS"
-          AccountSequenceNumber: 1
+          AccountSequenceNumber: 1 
+          DescriptionText: "DCC"
+          EnvironmentIdentifier: "NPD"
+          ValidateOnly: false
           DCCRegionalHub: "AME"
-          Chargecode: "LPEGAWS"
-          CmsCode: "DT-CCMS"
-          CountryCode: "DTTL"
-          Function: "CON"
-          DataQualifier: "PUB_PUB"
+          Chargecode: "LPmadzjd"
+          CmsCode: "DT-CdzadadCMS"
+          CountryCode: "DdzdaddzadzdadzadTTL"
+          Function: "COdzaN"
+          DataQualifier: "PUB_zadazPUB"
+          DataType: "DELL"
+          AppId: "Azadpdazdzdp42627"
           CustomerName: "Test_AWS"
           MemberFirm: "US"
           Networking:
@@ -32,5 +37,5 @@ stages:
               secSubAddressMasks: "[28,28]"
           AccessProvisioning:
             - users:
-                - "a-dcc@dell.com"
+                - "a-dell@deell.com"
               permissionGroup: "PowerUser"
