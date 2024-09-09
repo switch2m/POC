@@ -5,7 +5,7 @@ stages:
       ProjectName: "TEST
       Platforms:
         - Platform: "AWS"
-          AccountSequenceNumber: 1 # ID, should be auto incremented if we adopt generating this file automatically
+          AccountSequenceNumber: 1
           DCCRegionalHub: "AME"
           Chargecode: "LPEGAWS"
           CmsCode: "DT-CCMS"
